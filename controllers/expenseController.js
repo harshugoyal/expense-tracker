@@ -2,7 +2,9 @@ const Expense = require("../models/Expense");
 
 exports.getExpenses = async (req, res) => {
 
-    const expenses = await Expense.find();
+    const expenses = await Expense.find({
+    user: req.session.userId
+});
 
     const total = expenses.reduce(
         (sum, expense) => sum + expense.amount,
@@ -20,7 +22,8 @@ exports.addExpense = async (req, res) => {
     const expense = new Expense({
         title: req.body.title,
         amount: req.body.amount,
-        category: req.body.category
+        category: req.body.category,
+        user: req.session.userId
     });
 
     await expense.save();
@@ -29,24 +32,33 @@ exports.addExpense = async (req, res) => {
 };
 
 exports.deleteExpense = async (req, res) => {
-    await Expense.findByIdAndDelete(req.params.id);
+    await Expense.findOneAndDelete({
+    _id: req.params.id,
+    user: req.session.userId
+    });
     res.redirect("/");
 };
 
 exports.showEditForm = async (req, res) => {
-    const expense = await Expense.findById(req.params.id);
+    const expense = await Expense.findOne({
+    _id: req.params.id,
+    user: req.session.userId
+    });
     res.render("editExpense", { expense });
 };
 
 exports.updateExpense = async (req, res) => {
-    await Expense.findByIdAndUpdate(
-        req.params.id,
-        {
-            title: req.body.title,
-            amount: req.body.amount,
-            category: req.body.category
-        }
-    );
+    await Expense.findOneAndUpdate(
+    {
+        _id: req.params.id,
+        user: req.session.userId
+    },
+    {
+        title: req.body.title,
+        amount: req.body.amount,
+        category: req.body.category
+    }
+);
 
     res.redirect("/");
 };

@@ -5,8 +5,11 @@ const router = express.Router();
 const expenseController =
 require("../controllers/expenseController");
 
+const auth = require("../middleware/auth");
+
 router.get(
     "/",
+    auth.isLoggedIn,
     expenseController.getExpenses
 );
 router.get("/add", expenseController.showForm);
