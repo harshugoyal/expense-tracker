@@ -8,22 +8,19 @@ require("../controllers/expenseController");
 const auth = require("../middleware/auth");
 
 router.get(
-    "/",
+    "/dashboard",
     auth.isLoggedIn,
     expenseController.getExpenses
 );
-router.get("/add", expenseController.showForm);
+router.get("/add", auth.isLoggedIn, expenseController.showForm);
 
-router.post("/add", expenseController.addExpense);
+router.post("/add", auth.isLoggedIn, expenseController.addExpense);
 
-router.get("/delete/:id", expenseController.deleteExpense);
+router.post("/delete/:id", auth.isLoggedIn, expenseController.deleteExpense);
 
-router.get("/edit/:id", expenseController.showEditForm);
+router.get("/edit/:id", auth.isLoggedIn, expenseController.showEditForm);
 
-router.post("/edit/:id", expenseController.updateExpense);
+router.post("/edit/:id", auth.isLoggedIn, expenseController.updateExpense);
 
-router.get(
-    "/search",
-    expenseController.searchExpense
-);
+router.get("/search", auth.isLoggedIn, expenseController.searchExpense);
 module.exports = router;

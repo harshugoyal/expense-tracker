@@ -17,7 +17,7 @@
 
     <h1>All Expenses</h1>
 
-   <a href="/add" class="btn btn-success mb-3">
+   <a href="/expenses/add" class="btn btn-success mb-3">
     Add Expense
     </a>
     <div class="alert alert-success">
@@ -29,7 +29,7 @@
     </div>
     <br><br>
     
-    <form action="/search" method="GET">
+    <form action="/expenses/search" method="GET">
     <div class="input-group mb-3">
     <input
         type="text"
@@ -62,10 +62,16 @@
                 <td><%= expense.amount %></td>
                 <td><%= expense.category %></td>
                 <td>
-                <a class="btn btn-danger">Delete</a>
+                <form action="/expenses/delete/<%= expense._id %>" method="POST">
+                <button class="btn btn-danger">
+                Delete
+                </button>
+                </form>
                 </td>
                 <td>
-               <a class="btn btn-primary">Edit</a>
+               <a href="/expenses/edit/<%= expense._id %>" class="btn btn-primary">
+                Edit
+                </a>
                 </td>
             </tr>
         <% }) %>

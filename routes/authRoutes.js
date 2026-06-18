@@ -5,13 +5,10 @@ const router = express.Router();
 const authController =
     require("../controllers/authController");
 
-
 router.get(
     "/register",
     authController.showRegister
 );
-
-module.exports = router;
 router.post(
     "/register",
     authController.register
@@ -24,3 +21,9 @@ router.post(
     "/login",
     authController.login
 );
+router.get(
+    "/logout",
+    authController.logout
+);
+
+module.exports = router;
