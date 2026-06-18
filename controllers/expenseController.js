@@ -1,9 +1,11 @@
 const Expense = require("../models/expense");
+const Budget = require("../models/budget");
 
 exports.getExpenses = async (req, res) => {
     try {
         const expenses = await Expense.find({ user: req.session.userId }).sort({ date: -1 });
         const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
+        const budget = await Budget.findOne({user: req.session.userId});
 
         // group expenses by category for chart
         const categoryTotals = {};
@@ -17,13 +19,14 @@ exports.getExpenses = async (req, res) => {
 
         const chartLabels = Object.keys(categoryTotals);
         const chartData = Object.values(categoryTotals);
+        const remaining = budget ? budget.amount - total : 0;
 
         res.render("index", {
-            expenses,
-            total,
-            userName: req.session.userName,
-            chartLabels,
-            chartData
+        expenses,
+        total,
+        budget,
+        remaining,
+        userName: req.session.userName
         });
     } catch (err) {
         console.error(err);

@@ -28,7 +28,11 @@ require("./routes/expenseRoutes");
 const authRoutes =
     require("./routes/authRoutes");
 
+const budgetRoutes =
+require("./routes/budgetRoutes");
+
 app.use("/expenses", expenseRoutes);
+app.use("/expenses", budgetRoutes);
 app.use("/", authRoutes);
 
 
