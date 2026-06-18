@@ -26,6 +26,8 @@ exports.getExpenses = async (req, res) => {
         total,
         budget,
         remaining,
+        chartLabels,
+        chartData,
         userName: req.session.userName
         });
     } catch (err) {
@@ -112,7 +114,20 @@ exports.searchExpense = async (req, res) => {
             }
         });
         const total = expenses.reduce((sum, expense) => sum + expense.amount, 0);
-        res.render("index", { expenses, total, userName: req.session.userName, chartLabels: [],chartData: [] });
+        const budget = await Budget.findOne({user: req.session.userId});
+        const remaining = budget ? budget.amount - total : 0;
+
+       
+        res.render("index", {
+            expenses,
+            total,
+            budget,
+            remaining,
+            userName: req.session.userName,
+            chartLabels: [],
+            chartData: []
+        });
+        
     } catch (err) {
         console.error(err);
         res.status(500).send("Something went wrong");

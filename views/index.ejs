@@ -43,10 +43,11 @@
         <div class="mb-3">
         <label>Monthly Budget</label>
         <input
-            type="number"
-            name="amount"
-            class="form-control"
-            required>
+        type="number"
+        name="amount"
+        class="form-control"
+        value="<%= budget ? budget.amount : '' %>"
+        required>
         </div>
         <button
         class="btn btn-primary">
@@ -80,7 +81,7 @@
         percentage = 100;
     }
     %>
-    <div class="progress mt-3">
+    <div class="progress mt-3 mb-4">
         <div
             class="progress-bar"
             role="progressbar"
@@ -89,7 +90,7 @@
          </div>
     </div>
 
-    
+
         <form action="/expenses/search" method="GET">
             <div class="input-group mb-3">
                 <input
