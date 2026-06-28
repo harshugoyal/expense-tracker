@@ -3,7 +3,7 @@
 A full-stack web application to track your daily expenses, built with Node.js, Express, MongoDB and EJS.
 
 ## 🌐 Live Demo
-Coming soon
+[Live Demo](https://expense-tracker-zvfs.onrender.com)
 
 ## ✨ Features
 
@@ -103,11 +103,11 @@ npm install
 ```
 
 3. Create a `.env` file in the root directory
+```
 MONGO_URI=your_mongodb_connection_string
-
 SESSION_SECRET=your_secret_key
-
 PORT=3000
+```
 
 4. Run the app
 ```bash
